@@ -1,0 +1,18 @@
+SELECT * FROM main_information
+INNER JOIN capital 
+ON main_information.capital_city = capital.c_id
+INNER JOIN capital_area
+ON capital.area = capital_area.s_id
+
+INNER JOIN country 
+ON main_information.country = country.cn_id
+INNER JOIN relious
+ON country.r_id = relious.cnr_id
+
+INNER JOIN checkpoint
+ON main_information.checkpoints = checkpoint.cp_id
+
+INNER JOIN languages
+ON main_information.languages = languages.l_id
+INNER JOIN other_languages
+ON languages.other = other_languages.ol_id

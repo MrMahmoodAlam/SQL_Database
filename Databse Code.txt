@@ -1,0 +1,95 @@
+use language;
+-- MAIN TABLE STARTED
+CREATE TABLE main_information (
+	id INT PRIMARY KEY UNIQUE NOT NULL,
+    capital_city INT UNIQUE,
+    country VARCHAR(100),
+    checkpoints varchar(50),
+    languages VARCHAR(100),
+    FOREIGN KEY(capital_city) REFERENCES capital(c_id),
+    FOREIGN KEY(country) REFERENCES country(cn_id),
+    FOREIGN KEY(checkpoints) REFERENCES checkpoint(cp_id),
+    FOREIGN KEY(languages) REFERENCES languages(l_id)
+);
+INSERT INTO main_information VALUES
+(1, 1, "cn1", "c1", "cl1"),
+(2, 2, "cn2", "c2", "cl2");
+
+
+-- CAPITAL CITY WITH AREA STARTED
+CREATE TABLE capital (
+	c_id INT PRIMARY KEY,
+    capital_city VARCHAR(100),
+    area VARCHAR(100),
+    FOREIGN KEY(area) REFERENCES capital_area(s_id)
+);
+CREATE TABLE capital_area(
+	s_id VARCHAR(100) PRIMARY KEY CHECK (s_id LIKE "SC%"),
+    city_area INT
+);
+
+INSERT INTO capital VALUES 
+(1, "Delhi", "sc1"),
+(2, "Berline", "sc2");
+
+INSERT INTO capital_area VALUES 
+("sc1", 1452),
+("sc2", 54622);
+-- CAPITAL ENDED
+
+
+
+-- COUNTRY JOIN WITH RELIGIOUS STARTED
+CREATE TABLE country (
+	cn_id varchar(100) PRIMARY KEY,
+    country_name varchar(100),
+    r_id VARCHAR(100),
+    FOREIGN KEY(r_id) REFERENCES relious(cnr_id)
+);
+CREATE TABLE relious(
+	cnr_id VARCHAR(100) NOT NULL PRIMARY KEY,
+    relious INT NOT NULL
+);
+INSERT INTO country VALUES 
+("cn1", "india", "r1"),
+("cn2", "afganistan", "r2");
+
+INSERT INTO relious VALUES 
+("r1", 10),
+("r2", 20);
+-- COUNTRY ENDED
+
+
+
+-- CHECKPOINTS STARTED
+CREATE TABLE checkpoint (
+	cp_id varchar(100) NOT NULL PRIMARY KEY,
+    checkpoint INT NOT NULL
+);
+INSERT INTO checkpoint VALUES 
+("C1", 40),
+("C2", 67);
+-- CHECKPOINT ENDED
+
+
+
+-- LANGUAGES STARTED
+CREATE TABLE languages (
+	l_id VARCHAR(100) NOT NULL PRIMARY KEY,
+    main_lang VARCHAR(100) NOT NULL,
+    other varchar(100) NOT NULL,
+    foreign key(other) references other_languages(ol_id)
+);
+CREATE TABLE other_languages (
+	ol_id VARCHAR(100) PRIMARY KEY,
+    other_lang INT NOT NULL
+);
+
+INSERT INTO languages VALUES 
+("cl1", "hindi", "ol1"),
+("cl2", "korean", "ol2");
+
+INSERT INTO other_languages VALUES 
+("ol1", 5),
+("ol2", 14);
+-- LANGUAGES ENDED
